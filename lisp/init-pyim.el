@@ -66,10 +66,10 @@ Can be used in `rime-disable-predicates' and `rime-inline-predicates'."
        (string-match-p "\\cc +$" string))))
 
 (require 'pyim)
-;; (pyim-default-scheme 'quanpin)
-(pyim-default-scheme 'xiaohe-shuangpin)
+(pyim-default-scheme 'quanpin)
+;; (pyim-default-scheme 'xiaohe-shuangpin)
 (setq pyim-cloudim 'baidu)
-(setq pyim-page-tooltip 'posframe)
+;; (setq pyim-page-tooltip 'posframe)
 (setq-default pyim-english-input-switch-functions
               `(
                 ;; pyim-probe-dynamic-english
