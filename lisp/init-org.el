@@ -144,5 +144,10 @@
                       "~/Documents/Org/archive.org"
                       "~/Documents/Org/inbox.org")))
 
+;;; denote
+(setq denote-directory "~/Documents/denote")
+(global-bind-keys
+ ("C-c o d" . denote-open-or-create))
+
 (provide 'init-org)
 ;;; init-org.el ends here.
