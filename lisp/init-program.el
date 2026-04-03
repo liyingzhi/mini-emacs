@@ -19,11 +19,11 @@
    '("@" . "C-c @")))
 
 ;;; Tree-sitter
-(require 'treesit)
-(customize-set-variable 'treesit-font-lock-level 4)
+;; (require 'treesit)
+;; (customize-set-variable 'treesit-font-lock-level 4)
 
-(treesit-font-lock-recompute-features
- '(command string variable function operator bracket keyword))
+;; (treesit-font-lock-recompute-features
+;;  '(command string variable function operator bracket keyword))
 
 ;;; Xref
 (setq xref-show-xrefs-function 'consult-xref)
