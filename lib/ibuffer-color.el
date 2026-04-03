@@ -107,12 +107,12 @@
 		          ""))
       filename)))
 
-(define-ibuffer-column recency+
-  (:name "Recency" :inline t :header-mouse-map ibuffer-recency-header-map)
-  (if-let* ((time (buffer-local-value 'buffer-display-time buffer)))
-      (format "%s ago" (seconds-to-string
-                        (float-time (time-since time)) t t))
-    "never"))
+;; (define-ibuffer-column recency+
+;;   (:name "Recency" :inline t :header-mouse-map ibuffer-recency-header-map)
+;;   (if-let* ((time (buffer-local-value 'buffer-display-time buffer)))
+;;       (format "%s ago" (seconds-to-string
+;;                         (float-time (time-since time)) t t))
+;;     "never"))
 
 (provide 'ibuffer-color)
 ;;; ibuffer-color.el ends here

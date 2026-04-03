@@ -32,8 +32,8 @@
         (plist-put org-format-latex-options :scale 4.0)))
 
 ;; yank
-(with-eval-after-load 'yank-media
-  (add-to-list 'yank-media-preferred-types 'image/tiff))
+;; (with-eval-after-load 'yank-media
+;;   (add-to-list 'yank-media-preferred-types 'image/tiff))
 
 ;;; Org export
 (setopt org-export-with-drawers nil

@@ -69,13 +69,6 @@ This command supports `meow-selection-command-fallback'."
 (keymap-binds goto-map
   ("f" . find-file-at-point))
 
-(defvar-keymap find-map
-  :doc "Keymap for find commands."
-  :prefix t
-  "c" #'find-custom-file
-  "l" #'find-library
-  "v" #'find-variable)
-
 (global-bind-keys
  ("<escape>" . keyboard-quit))
 
@@ -209,8 +202,7 @@ This command supports `meow-selection-command-fallback'."
    '("<escape>" . ignore))
 
   (meow-normal-define-key
-   '("g" . "M-g")
-   (cons "F" find-map))
+   '("g" . "M-g"))
 
   (meow-normal-define-key
    '("C-;" . grugru)

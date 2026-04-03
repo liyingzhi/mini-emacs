@@ -43,14 +43,14 @@
     ("a" "Remember under" project-remember-projects-under)]]
   [("q" "Quit" transient-quit-one)])
 
-(defvar-keymap project-dir-locals-map
-  :doc "Project dir-locals map."
-  :prefix t
-  "e" '("Edit" . project-edit-dir-local)
-  "s" '("Trust" . project-add-to-safe-local-variable)
-  "a" '("Add" . project-add-dir-local-variable))
+;; (defvar-keymap project-dir-locals-map
+;;   :doc "Project dir-locals map."
+;;   :prefix t
+;;   "e" '("Edit" . project-edit-dir-local)
+;;   "s" '("Trust" . project-add-to-safe-local-variable)
+;;   "a" '("Add" . project-add-dir-local-variable))
 
-(keymap-set project-prefix-map "e" '("Dir Locals" . project-dir-locals-map))
+;; (keymap-set project-prefix-map "e" '("Dir Locals" . project-dir-locals-map))
 
 (keymap-unset project-prefix-map "C-b")
 (keymap-binds project-prefix-map

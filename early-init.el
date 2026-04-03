@@ -2,9 +2,9 @@
 ;;; Commentary:
 ;;; Code:
 
-(tool-bar-mode -1)
+;(tool-bar-mode -1)
 (menu-bar-mode -1)
-(scroll-bar-mode -1)
+;(scroll-bar-mode -1)
 (setq frame-inhibit-implied-resize t)
 ;; 增加IO性能
 (setq read-process-output-max (* 1024 1024 10))
