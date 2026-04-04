@@ -31,6 +31,6 @@
 (require 'init-project)
 (require 'init-git)
 
-;;(require 'init-program)
+(require 'init-program)
 
 ;;; init.el ends here.

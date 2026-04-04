@@ -175,97 +175,6 @@ ARGS is ORIG-FN args."
 (require 'yasnippet)
 (yas-global-mode 1)
 
-;;; citre
-(require 'citre-config)
-(require 'citre)
-(setq citre-auto-enable-citre-mode-modes '(prog-mode))
-(setq citre-ctags-program "/usr/bin/ctags")
-(add-hook 'find-file-hook #'citre-auto-enable-citre-mode)
-
-(add-hook #'eglot-managed-mode-hook
-          #'(lambda ()
-              (when citre-mode
-                (setq-local xref-backend-functions
-                            '(citre-xref-backend
-                              t)))))
-
-;;; eglot
-(setq read-process-output-max (* 1024 1024)) ; 1MB
-(setq eglot-autoshutdown t
-      eglot-events-buffer-size 0
-      eglot-send-changes-idle-time 0.5
-      eglot-events-buffer-config '(:size 0 :format full)
-      eglot-prefer-plaintext t
-      jsonrpc-event-hook nil
-      eglot-code-action-indications nil ;; EMACS-31 -- annoying as hell
-      )
-
-(fset #'jsonrpc--log-event #'ignore)
-
-(require 'eglot)
-
-(setq eglot-ignored-server-capabilities
-      '(:inlayHintProvider
-        :documentHighlightProvider
-        :documentFormattingProvider
-        :documentRangeFormattingProvider
-        :documentOnTypeFormattingProvider
-        :colorProvider
-        :foldingRangeProvider
-        ;; :hoverProvider
-        ))
-
-(setq eglot-stay-out-of
-      '(imenu))
-
-;;; keymap
-(defun eglot-restart ()
-  "Restart eglot."
-  (interactive)
-  (call-interactively #'eglot-shutdown)
-  (call-interactively #'eglot))
-
-(keymap-binds eglot-mode-map
-  ("C-c j r" . eglot-rename)
-  ("C-c j R" . eglot-restart)
-  ("C-c j a" . eglot-code-actions)
-
-  ("M-g u" . eglot-find-implementation))
-
-(add-hook 'prog-mode-hook
-          #'(lambda ()
-              (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode 'snippet-mode 'json-ts-mode)
-                (eglot-ensure))))
-
-;; Emacs LSP booster
-(when (executable-find "emacs-lsp-booster")
-  (eglot-booster-mode 1))
-
-;;; format
-(require 'apheleia)
-
-(setf (alist-get 'isort apheleia-formatters)
-      '("isort" "--stdout" "-"))
-
-(setf (alist-get 'python-ts-mode apheleia-mode-alist)
-      '(isort black))
-
-(setf (alist-get 'rust-ts-mode apheleia-mode-alist)
-      'cargo-fmt)
-
-(setf (alist-get 'cargo-fmt apheleia-formatters)
-      '("cargo" "fmt"))
-
-(defun format-code-buffer ()
-  "Format now buffer."
-  (interactive)
-  (save-buffer)
-  (call-interactively #'apheleia-format-buffer)
-  (revert-buffer t t))
-
-(global-bind-keys
- ("C-c j f" . format-code-buffer))
-
 ;;; language
 (add-to-list 'auto-mode-alist '("\\.launch$" . xml-mode))
 (add-to-list 'auto-mode-alist '("\\.urdf\\'" . nxml-mode))
@@ -312,36 +221,6 @@ ARGS is ORIG-FN args."
   ("C-c r" . eval-buffer-and-message)
   ("C-c C-p" . ielm)
   ("C-h ?" . helpful-at-point))
-
-;;; python
-(with-eval-after-load 'eglot
-  (defun random-hex-string (n)
-    "Generate random N len hex string."
-    (let ((str ""))
-      (dotimes (_ n str)
-        (setq str (format "%s%02x" str (random 256))))))
-
-  (add-to-list 'eglot-server-programs
-               `((python-mode python-ts-mode) . ,(lambda (_interactive _project)
-                                                   (list "basedpyright-langserver"
-                                                         "--stdio"
-                                                         (format "--cancellationReceive=file:%s"
-                                                                 (random-hex-string 21))))))
-
-  (setq-default eglot-workspace-configuration
-                '(:basedpyright (:typeCheckingMode "basic"))))
-
-(when (executable-find "ty")
-  (with-eval-after-load 'eglot
-    (add-to-list 'eglot-server-programs
-                 '((python-mode python-ts-mode) . ("ty" "server")))))
-
-;;; bash
-(add-hook 'sh-mode-hook #'(lambda () (treesit-parser-create 'bash)))
-
-;;; json
-(add-hook 'json-mode-hook #'(lambda () (treesit-parser-create 'json)))
-(setq json-ts-mode-indent-offset 4)
 
 ;;; yaml
 (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-ts-mode))
