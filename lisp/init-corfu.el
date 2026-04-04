@@ -29,27 +29,29 @@
   (interactive)
   (when (meow-insert-mode-p)
     (or (yas-expand)
-        (corfu-complete))))
+        (company-complete))))
 
-(require 'corfu)
-(setq corfu-auto t
-      corfu-quit-no-match t
-      corfu-auto-prefix 2
-      corfu-preview-current nil
-      corfu-auto-delay 0.2
-      corfu-popupinfo-delay '(0.4 . 0.2))
+;; (require 'corfu)
+;; (setq corfu-auto t
+;;       corfu-quit-no-match t
+;;       corfu-auto-prefix 2
+;;       corfu-preview-current nil
+;;       corfu-auto-delay 0.2
+;;       corfu-popupinfo-delay '(0.4 . 0.2))
 
-(custom-set-faces
- '(corfu-border ((t (:inherit region :background unspecified)))))
+;; (custom-set-faces
+;;  '(corfu-border ((t (:inherit region :background unspecified)))))
 
-(keymap-binds corfu-map
-  ("TAB" . +complete))
+(global-company-mode)
+;; (keymap-binds company-mode-map
+;;   ("TAB" . +complete))
 
-(add-hook 'after-init-hook #'global-corfu-mode)
-(add-hook 'global-corfu-mode-hook #'corfu-popupinfo-mode)
 
-(corfu-history-mode 1)
-(add-to-list 'savehist-additional-variables 'corfu-history)
+;; (add-hook 'after-init-hook #'global-corfu-mode)
+;; (add-hook 'global-corfu-mode-hook #'corfu-popupinfo-mode)
+
+;; (corfu-history-mode 1)
+;; (add-to-list 'savehist-additional-variables 'corfu-history)
 
 ;;; cape
 (add-list-to-list 'completion-at-point-functions

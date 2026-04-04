@@ -38,7 +38,6 @@
         fussy-compare-same-score-fn 'fussy-histlen->strlen<)
 
 (fussy-setup)
-(fussy-eglot-setup)
 
 (with-eval-after-load 'corfu
   ;; For cache functionality.

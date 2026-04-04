@@ -121,6 +121,7 @@
     diff-hl
 
     corfu
+    company
     cape
     citre
     (eglot-booster :fetcher github :repo "jdtsmith/eglot-booster")

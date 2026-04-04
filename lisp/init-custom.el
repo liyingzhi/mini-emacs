@@ -7,7 +7,8 @@
   :group 'user
   :type '(choice (const :tag "fido" fido)
                  (const :tag "mct" mct)
-                 (const :tag "vertico" vertico)))
+                 (const :tag "vertico" vertico)
+                 (const :tag "icomplete" icomplete)))
 
 ;; Load `custom-file'
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

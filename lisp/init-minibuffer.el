@@ -45,6 +45,9 @@
           (not (boundp 'icomplete-vertical-in-buffer-adjust-list)))
   (require 'minibuffer-prefix))
 
+(when (equal user/minibuffer 'icomplete)
+  (icomplete-mode))
+
 ;;; mct
 (when (equal user/minibuffer 'mct)
   (require 'mct)
