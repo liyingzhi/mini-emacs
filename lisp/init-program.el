@@ -173,6 +173,13 @@ ARGS is ORIG-FN args."
       yas-buffer-local-condition #'meow-insert-mode-p)
 
 (require 'yasnippet)
+
+(advice-add #'yas-maybe-expand-abbrev-key-filter
+            :around
+            (lambda (orig-fn &rest args)
+              (when (meow-insert-mode-p)
+                (apply orig-fn args))))
+
 (yas-global-mode 1)
 
 ;;; language
