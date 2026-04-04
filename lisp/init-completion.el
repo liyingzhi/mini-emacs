@@ -56,7 +56,8 @@
                `(?& . ,#'orderless-literal)))
 
 ;;; corfu
-(require 'init-corfu)
+;; (require 'init-corfu)
+(require 'init-company)
 
 (provide 'init-completion)
 ;;; init-completion.el ends here.

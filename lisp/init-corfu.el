@@ -24,12 +24,12 @@
 
 ;;; Code:
 
-(defun +complete ()
-  "TAB complete."
-  (interactive)
-  (when (meow-insert-mode-p)
-    (or (yas-expand)
-        (company-complete))))
+;; (defun +complete ()
+;;   "TAB complete."
+;;   (interactive)
+;;   (when (meow-insert-mode-p)
+;;     (or (yas-expand)
+;;         (company-complete))))
 
 ;; (require 'corfu)
 ;; (setq corfu-auto t
@@ -42,7 +42,7 @@
 ;; (custom-set-faces
 ;;  '(corfu-border ((t (:inherit region :background unspecified)))))
 
-(global-company-mode)
+;; (global-company-mode)
 ;; (keymap-binds company-mode-map
 ;;   ("TAB" . +complete))
 
