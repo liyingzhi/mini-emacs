@@ -18,7 +18,8 @@
         company-idle-delay 0
         company-echo-delay 0
         company-tooltip-offset-display 'scrollbar
-        company-begin-commands '(self-insert-command)))
+        ;; company-begin-commands '(self-insert-command)
+        ))
 
 (defun +complete ()
   "TAB complete."
@@ -84,8 +85,36 @@ ac-auto-show-menu 为 nil 的情形, 这种模式比较适合在 yasnippet 正�
 ;; (setopt company-backends
 ;;         '(company-abbrev company-yasnippet company-dabbrev company-files company-capf company-elisp company-keywords))
 
+(require 'cape)
+
+(advice-add 'comint-completion-at-point :around #'cape-wrap-nonexclusive)
+(advice-add 'pcomplete-completions-at-point :around #'cape-wrap-nonexclusive)
+
+
+(add-list-to-list 'completion-at-point-functions
+                  '(cape-elisp-block
+                    cape-keyword))
+
+(defun my/org-capf ()
+  "Set up `completion-at-point' functions for Org mode.
+
+This function configures a custom `completion-at-point' setup for Org mode
+buffers, providing:
+- File path completion (`cape-file')
+- Shell command completion (`pcomplete-completions-at-point')
+- Elisp block completion (`cape-elisp-block')
+- Super completion combining dabbrev and dictionary completion"
+  (setq-local completion-at-point-functions
+              '(pcomplete-completions-at-point
+                cape-elisp-block
+                cape-dabbrev)))
+
+(add-hook 'org-mode-hook #'my/org-capf)
+
+;; (setopt company-backends `(company-files
+;;                            company-capf))
+
 (setopt company-backends `(company-semantic
-                           company-capf
                            company-files
                            (company-dabbrev-code
                             company-keywords)
