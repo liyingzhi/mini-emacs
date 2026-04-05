@@ -120,7 +120,7 @@
     magit
     diff-hl
 
-    corfu
+    ;; corfu
     company
     cape
     citre
