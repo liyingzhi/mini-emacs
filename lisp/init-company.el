@@ -20,21 +20,23 @@
         company-tooltip-offset-display 'scrollbar
         company-begin-commands '(self-insert-command)))
 
+(defun +complete ()
+  "TAB complete."
+  (interactive)
+  (when (meow-insert-mode-p)
+    (or (yas-expand)
+        (company-complete))))
+
+
 (defun set-company-tab ()
-  (define-key company-active-map [tab] 'company-select-next-if-tooltip-visible-or-complete-selection)
-  (define-key company-active-map (kbd "TAB") 'company-select-next-if-tooltip-visible-or-complete-selection))
+  (define-key company-active-map [tab] '+complete)
+  (define-key company-active-map (kbd "TAB") '+complete))
 
 (set-company-tab)
 
-(with-eval-after-load 'company
-  (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
-  (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
-  (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
-  (define-key company-active-map (kbd "<backtab>") 'company-select-previous))
 (setq company-frontends
       '(company-pseudo-tooltip-unless-just-one-frontend
-        company-preview-frontend
-        company-echo-metadata-frontend))
+        company-preview-frontend))
 
 (defun advice-only-show-tooltip-when-invoked (orig-fun command)
   "原始的 company-pseudo-tooltip-unless-just-one-frontend-with-delay, 它一直会显示
