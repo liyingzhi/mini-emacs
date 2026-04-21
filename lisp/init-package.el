@@ -139,7 +139,7 @@
     diredfl
     org-superstar
     (org-modern-indent :fetcher github :repo "jdtsmith/org-modern-indent")
-
+    denote
     cal-china-x
 
     rime
