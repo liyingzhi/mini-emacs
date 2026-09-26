@@ -67,6 +67,8 @@
         ;; If the current charactor entered is a uppercase letter.
         rime-predicate-current-uppercase-letter-p))
 
+(setq rime-inline-ascii-trigger 'shift-r)
+
 (require 'im-cursor-chg)
 (cursor-chg-mode t)
 
