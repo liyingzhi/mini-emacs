@@ -43,5 +43,10 @@
 (add-hook 'magit-mode-hook
           #'magit-wip-mode)
 
+(with-eval-after-load 'transient
+  (keymap-binds transient-map
+    ("<escape>" . transient-quit-all)
+    ("q" . transient-quit-one)))
+
 (provide 'init-git)
 ;;; init-git.el ends here
