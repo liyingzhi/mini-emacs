@@ -224,7 +224,7 @@ OPEN and CLOSE. Otherwise, insert the delimiters with space for text in between.
     ("l" "Normal" ar/org-insert-link-dwim)]
    ["Emphasize"
     ("=" "Verbatim" (org-emphasize ?=))
-    ("~" "Code" (org-emphasize ?=))
+    ("~" "Code" (org-emphasize ?~))
     ("+" "Delete" (org-emphasize ?+))
     ("_" "Underline" (org-emphasize ?_))
 
