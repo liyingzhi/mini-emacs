@@ -20,7 +20,7 @@
 FONT-SIZE is the default font size."
   (when (display-graphic-p)
     ;; Set default font
-    (cl-loop for font in '("MonoLisa Lucius" "Source Code Pro" "Jetbrains Mono" "Cascadia Code" "Fira Code"
+    (cl-loop for font in '("MonoLisa Lucius" "Jetbrains Mono" "Source Code Pro" "Cascadia Code" "Fira Code"
                            "SF Mono" "Hack" "Menlo"
                            "Monaco" "DejaVu Sans Mono" "Consolas")
              when (font-installed-p font)
@@ -60,7 +60,7 @@ FONT-SIZE is the default font size."
     (cl-loop for font in '("LXGW Neo XiHei Screen Full" "LXGW WenKai" "LXGW Neo Xihei" "WenQuanYi Zen Hei" "PingFang SC" "Microsoft Yahei" "STFangsong")
              when (font-installed-p font)
              return (progn
-                      (setq face-font-rescale-alist `((,font . 1.2)))
+                      ;; (setq face-font-rescale-alist `((,font . 1.2)))
                       (set-fontset-font t 'han (font-spec :family font))))))
 
 (add-hook 'window-setup-hook #'setup-fonts)

@@ -7,7 +7,7 @@
   :group 'user
   :type 'symbol)
 
-(defcustom user/night-theme 'modus-vivendi
+(defcustom user/night-theme 'modus-vivendi-tinted
   "Night theme name."
   :group 'user
   :type 'symbol)
