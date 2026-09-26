@@ -85,6 +85,40 @@
 (autoload #'transient-org-toggles "lib-org" nil t)
 
 ;;; keymap
+(defun org-insert-item-auto-checkbox ()
+  "Org insert auto-checkbox item."
+  (interactive)
+  (org-insert-item
+   (and (org-in-item-p)
+        (save-excursion
+          (looking-back "\\[[ xX]\\].**" (line-beginning-position))))))
+
+(defun org-meta-return-auto (&optional arg)
+  "Insert a new heading or wrap a region in a table.
+Calls `org-insert-heading', `org-insert-item-auto-checkbox' or
+`org-table-wrap-region', depending on context.  When called with
+an ARG, unconditionally call `org-insert-heading'."
+  (interactive "P")
+  (or (run-hook-with-args-until-success 'org-metareturn-hook)
+      (call-interactively (cond (arg #'org-insert-heading)
+				                ((org-at-table-p) #'org-table-wrap-region)
+				                ((org-in-item-p) #'org-insert-item-auto-checkbox)
+				                (t #'org-insert-heading)))))
+
+(defun my/new-next-item-function-byScene ()
+  "Insert a new item based on the current context and scene.
+In `org-mode', insert a new TODO heading.
+In comments, insert a new commented line.
+Otherwise, jump out of the current pair and insert a newline."
+  (interactive)
+  (cond
+   ((derived-mode-p 'org-mode)
+    (call-interactively #'org-meta-return-auto))
+   ((nth 4 (syntax-ppss)) ; Inside a comment
+    (comment-indent-new-line))
+   (t
+    (puni-jump-out-pair-and-newline))))
+
 (with-eval-after-load 'org
   (keymap-binds org-mode-map
     ("C-c TAB" . org-insert-item-auto-checkbox)
@@ -93,7 +127,8 @@
     ("M-H" . org-metaleft)
     ("M-L" . org-metaright)
 
-    (("M-RET" "s-<return>") . org-meta-return-auto)
+    (("S-<return>") . my/new-next-item-function-byScene)
+
     ("s-P" . org-metaup)
     ("s-N" . org-metadown)
     ("s-H" . org-metaleft)
@@ -117,7 +152,8 @@
  ("C-c a" . org-agenda)
 
  ("C-c L" . org-store-link)
- ("C-c C-o" . org-open-at-point))
+ ("C-c C-o" . org-open-at-point)
+(("M-RET" "s-<return>" "S-<return>" "C-<return>") . my/new-next-item-function-byScene))
 
 ;;; org capture
 (with-eval-after-load 'org-capture
