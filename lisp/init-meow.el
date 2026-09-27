@@ -186,10 +186,10 @@ This command supports `meow-selection-command-fallback'."
    '("l" . meow-right)
    '("L" . meow-right-expand)
    '("m" . meow-join)
-   '("n" . meow-search)
+   '("n" . meow-normal-n-key-enhance)
    '("o" . meow-block)
    '("O" . meow-to-block)
-   '("p" . meow-yank)
+   '("p" . meow-normal-p-key-enhance)
    '("P" . meow-yank-pop)
    '("q" . meow-quit)
    '("r" . meow-replace)
@@ -223,6 +223,28 @@ This command supports `meow-selection-command-fallback'."
 
 (global-bind-keys
  ("C-y" . meow-clipboard-yank))
+
+(global-bind-keys
+ ("M-<left>" . previous-buffer)
+ ("M-<right>" . next-buffer))
+
+(defun meow-normal-n-key-enhance ()
+  "Enhanced n-key command for meow normal state.
+In telega chat mode, goes to next message;
+otherwise falls back to `meow-search'."
+  (interactive)
+  (if (eq major-mode 'telega-chat-mode)
+      (call-interactively #'telega-msg-next)
+    (call-interactively #'meow-search)))
+
+(defun meow-normal-p-key-enhance ()
+  "Enhanced p-key command for meow normal state.
+In telega chat mode, goes to previous message;
+otherwise falls back to `meow-yank'."
+  (interactive)
+  (if (eq major-mode 'telega-chat-mode)
+      (call-interactively #'telega-msg-previous)
+    (call-interactively #'meow-yank)))
 
 (provide 'init-meow)
 ;;; init-meow.el ends here
