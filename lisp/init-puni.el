@@ -63,7 +63,7 @@ S-expression."
    '("s-[" . puni-wrap-square)
    '("M-[" . puni-wrap-square)
    '("{" . puni-wrap-curly)
-   '("<" . puni-wrap-angle)
+   ;; '("<" . puni-wrap-angle)
    '("\"" . puni-wrap-double-quote)
    '("'" . puni-wrap-single-quote)
    '(")" . puni-splice)
