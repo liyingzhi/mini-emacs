@@ -246,5 +246,12 @@ otherwise falls back to `meow-yank'."
       (call-interactively #'telega-msg-previous)
     (call-interactively #'meow-yank)))
 
+(global-bind-keys
+ ("M-s i" . consult-imenu)
+ ("M-s I" . consult-imenu-multi)
+ ("M-s o" . consult-outline)
+ ("M-s B" . consult-bookmark)
+ ("M-s m" . consult-global-mark))
+
 (provide 'init-meow)
 ;;; init-meow.el ends here
