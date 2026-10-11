@@ -16,7 +16,8 @@
         (eww-mode . normal)
         (rg-mode . insert)
         (vterm-mode . insert)
-        (Info-mode-hook . motion)))
+        (Info-mode-hook . motion)
+        (helpful-mode . normal)))
 (setq meow-use-clipboard t)
 (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
 
