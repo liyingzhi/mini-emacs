@@ -344,7 +344,8 @@ account.")
 
  ([remap Info-search] . consult-info)
 
- ("C-c b" . consult-buffer)
+ ("C-c b b" . consult-buffer)
+ ("C-c b k" . kill-current-buffer)
  ("C-c B" . consult-buffer-other-window)
 
  ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
