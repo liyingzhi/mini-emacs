@@ -346,6 +346,7 @@ account.")
 
  ("C-c b b" . consult-buffer)
  ("C-c b k" . kill-current-buffer)
+ ("C-c b s" . save-some-buffers)
  ("C-c b r" . revert-buffer-quick)
  ("C-c B" . consult-buffer-other-window)
 
