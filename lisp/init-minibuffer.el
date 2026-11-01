@@ -159,6 +159,8 @@
 ;; (setq resize-mini-windows t)
 (setq minibuffer-eldef-shorten-default t)
 
+(add-hook 'minibuffer-setup-hook #'delete-selection-local-mode)
+
 (file-name-shadow-mode 1)
 (minibuffer-depth-indicate-mode 1)
 (minibuffer-electric-default-mode 1)
