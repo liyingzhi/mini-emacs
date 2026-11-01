@@ -108,6 +108,9 @@
     consult-dir
 
     markdown-mode
+    markdown-ts-appear
+    markdown-indent-mode
+
     csv-mode
 
     (meow :fetcher github :repo "meow-edit/meow")

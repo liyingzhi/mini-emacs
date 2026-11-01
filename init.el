@@ -32,5 +32,6 @@
 (require 'init-git)
 
 (require 'init-program)
+(require 'init-markdown)
 
 ;;; init.el ends here.
