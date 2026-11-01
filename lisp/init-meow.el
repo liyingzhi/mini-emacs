@@ -254,5 +254,8 @@ otherwise falls back to `meow-yank'."
  ("M-s B" . consult-bookmark)
  ("M-s m" . consult-global-mark))
 
+(global-bind-keys
+ ("C-M-r" . restart-emacs))
+
 (provide 'init-meow)
 ;;; init-meow.el ends here
