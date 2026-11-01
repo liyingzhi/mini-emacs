@@ -11,6 +11,16 @@
 (defconst user/default-linux-font-size 190
   "The default font size in linux.")
 
+(defconst user/fallback-fonts
+  '("MonoLisa Lucius" "Jetbrains Mono" "Iosevka" "Source Code Pro" "Cascadia Code"
+    "Fira Code" "SF Mono" "Hack" "Menlo" "Monaco" "DejaVu Sans Mono" "Consolas")
+  "Monospace fonts to try in order.")
+
+(defconst user/fallback-zh-fonts
+  '("LXGW WenKai Mono" "LXGW Neo XiHei Screen Full" "LXGW WenKai" "LXGW Neo Xihei"
+    "WenQuanYi Zen Hei" "PingFang SC" "Microsoft Yahei" "STFangsong")
+  "Zh fonts to try in order.")
+
 (defun font-installed-p (font-name)
   "Check if font with FONT-NAME is available."
   (find-font (font-spec :name font-name)))
@@ -20,9 +30,7 @@
 FONT-SIZE is the default font size."
   (when (display-graphic-p)
     ;; Set default font
-    (cl-loop for font in '("MonoLisa Lucius" "Jetbrains Mono" "Source Code Pro" "Cascadia Code" "Fira Code"
-                           "SF Mono" "Hack" "Menlo"
-                           "Monaco" "DejaVu Sans Mono" "Consolas")
+    (cl-loop for font in user/fallback-fonts
              when (font-installed-p font)
              return (set-face-attribute 'default nil
                                         :family font
@@ -57,14 +65,51 @@ FONT-SIZE is the default font size."
                       (set-fontset-font t 'emoji (font-spec :family font) nil 'prepend))))
 
     ;; Specify font for Chinese characters
-    (cl-loop for font in '("LXGW Neo XiHei Screen Full" "LXGW WenKai" "LXGW Neo Xihei" "WenQuanYi Zen Hei" "PingFang SC" "Microsoft Yahei" "STFangsong")
+    (cl-loop for font in user/fallback-zh-fonts
              when (font-installed-p font)
              return (progn
                       ;; (setq face-font-rescale-alist `((,font . 1.2)))
                       (set-fontset-font t 'han (font-spec :family font))))))
 
+(defun my/font-set-rescale (font scale)
+  "Set the rescale factor for FONT to SCALE in `face-font-rescale-alist'.
+If an entry for FONT already exists, update it in place; otherwise
+push a new (FONT . SCALE) entry onto the alist."
+  (let ((entry (assoc font face-font-rescale-alist)))
+    (if entry
+        (setcdr entry scale)
+      (push `(,font . ,scale) face-font-rescale-alist))))
+
+(defun my/font-measure-rescale (char1 char2)
+  "Return the rescale factor of CHAR1 relative to CHAR2.
+Measure the string pixel-width ratio of CHAR1 to CHAR2 at scale 1;
+the factor 2.0 accounts for CJK characters being double-width
+relative to Latin characters.
+
+For example, (my/font-measure-rescale \"h\" \"汉\") returns 1.0 when
+the font has the correct 1:2 Latin-to-CJK width ratio."
+  (/ (* 2.0 (string-pixel-width char1))
+     (string-pixel-width char2)))
+
+(defun my/setup-zh-font-rescale ()
+  "Set font rescale factors for the first setup Chinese font.
+Iterate over `user/favourite-zh-fonts' followed by `user/fallback-zh-fonts';
+for the first font that is installed, set the rescale for Latin glyphs to 1
+and the CJK rescale to the factor measured by `my/font-measure-rescale'."
+  (cl-loop for font in user/fallback-zh-fonts
+           when (font-installed-p font)
+           return (progn
+                    (my/font-set-rescale font 1)
+                    (set-fontset-font t 'han (font-spec :family font))
+                    (my/font-set-rescale font (my/font-measure-rescale "h" "汉"))
+                    (set-fontset-font t 'han (font-spec :family font)))))
+
+;;; setup default font
 (add-hook 'window-setup-hook #'setup-fonts)
+(add-hook 'window-setup-hook #'my/setup-zh-font-rescale 99)
+
 (add-hook 'server-after-make-frame-hook #'setup-fonts)
+(add-hook 'server-after-make-frame-hook #'my/setup-zh-font-rescale 99)
 
 (defun set-font-size (symbol value)
   "Set font SYMBOL VALUE."
