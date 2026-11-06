@@ -25,6 +25,14 @@
   "Check if font with FONT-NAME is available."
   (find-font (font-spec :name font-name)))
 
+(defun set-face-like-default (face)
+  "Set FACE attributes to match the default face."
+  (set-face-attribute face nil
+                      :family (face-attribute 'default :family nil 'default)
+                      :height 'unspecified
+                      :weight 'unspecified
+                      :slant 'unspecified))
+
 (defun setup-fonts (&optional font-size)
   "Setup fonts.
 FONT-SIZE is the default font size."
@@ -37,6 +45,11 @@ FONT-SIZE is the default font size."
                                         :height (if font-size
                                                     font-size
                                                   user/font-size)))
+
+    (set-face-like-default 'fixed-pitch)
+    (set-face-like-default 'fixed-pitch-serif)
+    (set-face-like-default 'variable-pitch)
+
     ;; Set mode-line font
     ;; (cl-loop for font in '("Menlo" "SF Pro Display" "Helvetica")
     ;;          when (font-installed-p font)
@@ -64,12 +77,22 @@ FONT-SIZE is the default font size."
                      (t
                       (set-fontset-font t 'emoji (font-spec :family font) nil 'prepend))))
 
+    ;; Force Emacs to search by using font-spec
+    (set-fontset-font t 'han (font-spec :script 'han) nil 'append)
+
     ;; Specify font for Chinese characters
     (cl-loop for font in user/fallback-zh-fonts
              when (font-installed-p font)
              return (progn
-                      ;; (setq face-font-rescale-alist `((,font . 1.2)))
-                      (set-fontset-font t 'han (font-spec :family font))))))
+                      ;; Do not use 'unicode charset, it will cause the English font setting invalid
+                      ;; kana       = Japanese Hiragana & Katakana (e.g., あ, ア)
+                      ;; han        = Chinese characters used in Chinese/Japanese/Korean (e.g., 中, 日, 韓)
+                      ;; cjk-misc   = CJK punctuation & symbols (e.g., 、 。 ① ②)
+                      ;; bopomofo   = Taiwanese phonetic symbols (e.g., ㄅ, ㄆ, ㄇ)
+                      ;; hangul     = Korean Hangul alphabet (e.g., 가, 나, 한)
+                      (dolist (charset '(kana han cjk-misc bopomofo hangul))
+                        (set-fontset-font t charset
+                                          (font-spec :family font)))))))
 
 (defun my/font-set-rescale (font scale)
   "Set the rescale factor for FONT to SCALE in `face-font-rescale-alist'.
