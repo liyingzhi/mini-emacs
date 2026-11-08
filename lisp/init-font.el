@@ -12,7 +12,8 @@
   "The default font size in linux.")
 
 (defconst user/fallback-fonts
-  '("MonoLisa Lucius" "Jetbrains Mono" "Iosevka" "Source Code Pro" "Cascadia Code"
+  '("Maple Mono" "MonoLisa Lucius" "Aporetic Sans Mono"
+    "JetBrainsMono Nerd Font Mono" "Iosevka" "Source Code Pro" "Cascadia Code"
     "Fira Code" "SF Mono" "Hack" "Menlo" "Monaco" "DejaVu Sans Mono" "Consolas")
   "Monospace fonts to try in order.")
 
