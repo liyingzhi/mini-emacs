@@ -138,7 +138,8 @@ This command supports `meow-selection-command-fallback'."
    '("0" . delete-window))
 
   (meow-leader-define-key
-   '("f" . find-file)
+   '("f f" . find-file)
+   '("f r" . consult-recent-file)
    '("F" . find-file-other-window))
 
   (meow-leader-define-key
