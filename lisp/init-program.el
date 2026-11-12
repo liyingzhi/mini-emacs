@@ -93,6 +93,10 @@ LANG is the language symbol, and REST are the remaining arguments."
 
  ("C-o" . xref-go-back))
 
+;;; dumb-jump
+(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+(setopt dumb-jump-prefer-searcher 'rg)
+
 ;;; flymake
 (defun my-elisp-flymake-byte-compile (fn &rest args)
   "Wrapper for `elisp-flymake-byte-compile'."

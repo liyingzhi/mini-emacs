@@ -150,7 +150,8 @@
     pyim-basedict
     (pyim-tsinghua-dict
      :fetcher github
-     :repo "redguardtoo/pyim-tsinghua-dict")))
+     :repo "redguardtoo/pyim-tsinghua-dict")
+    dumb-jump))
 
 (packages! *package-early-install-list*)
 
